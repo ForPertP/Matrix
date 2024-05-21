@@ -15,77 +15,61 @@ vector<string> split(const string &);
  *  2. INTEGER_ARRAY machines
  */
 
-int result = 0;
-vector<vector<pair<int, int>>>graph;
-map<int, int> mp;
+int dfs(int current, int parent, const vector<vector<pair<int, int>>>& graph, const unordered_set<int>& machines, int& result) {
+    vector<int> values;
 
-int dfs(int current, int parent)
-{
-    int n = graph[current].size();
-    vector<int>values;
+    for (const auto& neighbor : graph[current]) {
+        int next = neighbor.first;
+        int weight = neighbor.second;
+        if (next == parent) continue;
 
-    for (int i = 0; i < n; i++)
-    {
-        if (graph[current][i].first == parent) continue;
-        
-        int temp = dfs(graph[current][i].first, current);
-        
-        if (temp > 0)
-            values.push_back(min(temp, graph[current][i].second));
+        int temp = dfs(next, current, graph, machines, result);
+        if (temp > 0) {
+            values.push_back(min(temp, weight));
+        }
     }
-    
-    n = values.size();
-    
-    if (!mp[current])
-    {
-        if (n == 0) return -1;
-        if (n == 1) return values[0];
+
+    if (machines.find(current) == machines.end()) {
+        if (values.empty()) return -1;
+        if (values.size() == 1) return values[0];
+
         std::sort(values.begin(), values.end());
-        
-        for (int i = 0; i < n - 1; i++)
-        {
+
+        for (size_t i = 0; i < values.size() - 1; i++) {
             result += values[i];
         }
-        
-        return values[n - 1];
-    }
-    else
-    {
-        std::sort(values.begin(), values.end());
-        
-        for (int i = 0; i < n; i++)
-        {
-            result += values[i];
+
+        return values.back();
+    } else {
+        for (const int& value : values) {
+            result += value;
         }
-        
+
         return INT_MAX;
     }
 }
 
-int minTime(vector<vector<int>> roads, vector<int> machines)
-{
+
+int minTime(const vector<vector<int>>& roads, const vector<int>& machines) {
     int n = roads.size() + 1;
-    result = 0;
-    
-    int k = machines.size();
-    for (int i = 0; i < k; i++)
-        mp[machines[i]] = 1;
-    
-    graph.resize(n);
-    
-    for (int i = 0; i < n - 1; i++)
-    {
-        int a = roads[i][0];
-        int b = roads[i][1];
-        int d = roads[i][2];
-        graph[a].push_back({ b,d });
-        graph[b].push_back({ a,d });
+    int result = 0;
+
+    unordered_set<int> machines_set(machines.begin(), machines.end());
+    vector<vector<pair<int, int>>> graph(n);
+
+    for (const auto& road : roads) {
+        int a = road[0];
+        int b = road[1];
+        int d = road[2];
+        graph[a].push_back({b, d});
+        graph[b].push_back({a, d});
     }
 
-    dfs(0, -1);
+    dfs(0, -1, graph, machines_set, result);
 
     return result;
 }
+
 
 int main()
 {
@@ -101,7 +85,7 @@ int main()
     int k = stoi(first_multiple_input[1]);
 
     vector<vector<int>> roads(n - 1);
-    
+
     for (int i = 0; i < n - 1; i++) {
         roads[i].resize(3);
 
@@ -109,14 +93,6 @@ int main()
         getline(cin, roads_row_temp_temp);
 
         vector<string> roads_row_temp = split(rtrim(roads_row_temp_temp));
-
-        // case 11 - input bug check
-        if (roads_row_temp[0][0] == 'a')
-        {
-            fout << "8" << "\n";
-            fout.close();
-            return 0;
-        }
 
         for (int j = 0; j < 3; j++) {
             int roads_row_item = stoi(roads_row_temp[j]);
@@ -183,4 +159,3 @@ vector<string> split(const string &str) {
 
     return tokens;
 }
-
