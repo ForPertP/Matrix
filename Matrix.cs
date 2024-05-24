@@ -60,6 +60,30 @@ class Result
 
     public static int minTime(List<List<int>> roads, List<int> machines)
     {
+        int n = roads.Count + 1;
+        int result = 0;
+
+        HashSet<int> machinesSet = new HashSet<int>(machines);
+        List<List<Tuple<int, int>>> graph = new List<List<Tuple<int, int>>>(new List<Tuple<int, int>>[n]);
+
+        for (int i = 0; i < n; i++)
+        {
+            graph[i] = new List<Tuple<int, int>>();
+        }
+
+        foreach (var road in roads)
+        {
+            int a = road[0];
+            int b = road[1];
+            int d = road[2];
+            graph[a].Add(new Tuple<int, int>(b, d));
+            graph[b].Add(new Tuple<int, int>(a, d));
+        }
+
+        Dfs(0, -1, graph, machinesSet, ref result);
+
+        return result;
+        
     }
 }
 
