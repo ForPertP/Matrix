@@ -24,33 +24,41 @@ class Result
      *  2. INTEGER_ARRAY machines
      */
 
-    public static int Dfs(int current, int parent, List<List<Tuple<int, int>>> graph, HashSet<int> machines, ref int result) {
+    public static int Dfs(int current, int parent, List<List<Tuple<int, int>>> graph, HashSet<int> machines, ref int result)
+    {
         List<int> values = new List<int>();
 
-        foreach (var neighbor in graph[current]) {
+        foreach (var neighbor in graph[current])
+        {
             int next = neighbor.Item1;
             int weight = neighbor.Item2;
             if (next == parent) continue;
 
             int temp = Dfs(next, current, graph, machines, ref result);
-            if (temp > 0) {
+            if (temp > 0)
+            {
                 values.Add(Math.Min(temp, weight));
             }
         }
 
-        if (!machines.Contains(current)) {
+        if (!machines.Contains(current))
+        {
             if (!values.Any()) return -1;
             if (values.Count == 1) return values[0];
 
             values.Sort();
 
-            for (int i = 0; i < values.Count - 1; i++) {
+            for (int i = 0; i < values.Count - 1; i++)
+            {
                 result += values[i];
             }
 
             return values.Last();
-        } else {
-            foreach (var value in values) {
+        }
+        else
+        {
+            foreach (var value in values)
+            {
                 result += value;
             }
 
@@ -83,7 +91,6 @@ class Result
         Dfs(0, -1, graph, machinesSet, ref result);
 
         return result;
-        
     }
 }
 
