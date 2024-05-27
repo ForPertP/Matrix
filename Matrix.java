@@ -21,4 +21,9 @@ class Result {
      *  2. INTEGER_ARRAY machines
      */
 
+
+    public static int minTime(List<List<Integer>> roads, List<Integer> machines) {
+        int result = 0;
+        return result;
+    }
 }
