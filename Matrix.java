@@ -21,7 +21,10 @@ class Result {
      *  2. INTEGER_ARRAY machines
      */
 
-
+    public static int dfs(int current, int parent, List<List<int[]>> graph, Set<Integer> machines, int[] result) {
+            List<Integer> values = new ArrayList<>();
+    }
+    
     public static int minTime(List<List<Integer>> roads, List<Integer> machines) {
         int result = 0;
         return result;
