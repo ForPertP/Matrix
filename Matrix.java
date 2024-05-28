@@ -22,11 +22,14 @@ class Result {
      */
 
     public static int dfs(int current, int parent, List<List<int[]>> graph, Set<Integer> machines, int[] result) {
-            List<Integer> values = new ArrayList<>();
+        List<Integer> values = new ArrayList<>();
+
+        return Integer.MAX_VALUE;
     }
     
     public static int minTime(List<List<Integer>> roads, List<Integer> machines) {
         int result = 0;
+        
         return result;
     }
 }
