@@ -28,9 +28,27 @@ class Result {
     }
     
     public static int minTime(List<List<Integer>> roads, List<Integer> machines) {
-        int result = 0;
-        
-        return result;
+        int n = roads.size() + 1;
+        int[] result = new int[1];
+
+        Set<Integer> machinesSet = new HashSet<>(machines);
+        List<List<int[]>> graph = new ArrayList<>(n);
+
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for (List<Integer> road : roads) {
+            int a = road.get(0);
+            int b = road.get(1);
+            int d = road.get(2);
+            graph.get(a).add(new int[]{b, d});
+            graph.get(b).add(new int[]{a, d});
+        }
+
+        dfs(0, -1, graph, machinesSet, result);
+
+        return result[0];
     }
 }
 
