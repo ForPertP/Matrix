@@ -15,7 +15,8 @@ vector<string> split(const string &);
  *  2. INTEGER_ARRAY machines
  */
 
-int dfs(int current, int parent, const vector<vector<pair<int, int>>>& graph, const unordered_set<int>& machines, int& result) {
+int dfs(int current, int parent, const vector<vector<pair<int, int>>>& graph, const unordered_set<int>& machines, int& result)
+{
     vector<int> values;
 
     for (const auto& neighbor : graph[current]) {
@@ -50,7 +51,8 @@ int dfs(int current, int parent, const vector<vector<pair<int, int>>>& graph, co
 }
 
 
-int minTime(const vector<vector<int>>& roads, const vector<int>& machines) {
+int minTime(const vector<vector<int>>& roads, const vector<int>& machines)
+{
     int n = roads.size() + 1;
     int result = 0;
 
