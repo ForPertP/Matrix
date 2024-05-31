@@ -25,6 +25,9 @@ class Result
      */
 
     public static int Dfs(int current, int parent, List<List<Tuple<int, int>>> graph, HashSet<int> machines, ref int result)
+        int dfs(int current, int parent, const Vector<Vector<Pair<int, int>>>& graph, const unordered_set<int>& machines, int& result)
+        int dfs(int current, int parent, const vector<vector<pair<int, int>>>& graph, const unordered_set<int>& machines, int& result)
+{
     {
         List<int> values = new List<int>();
 
