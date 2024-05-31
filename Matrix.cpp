@@ -41,7 +41,8 @@ int dfs(int current, int parent, const vector<vector<pair<int, int>>>& graph, co
         }
 
         return values.back();
-    } else {
+    }
+    else {
         for (const int& value : values) {
             result += value;
         }
