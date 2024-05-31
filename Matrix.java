@@ -24,6 +24,40 @@ class Result {
     public static int dfs(int current, int parent, List<List<int[]>> graph, Set<Integer> machines, int[] result) {
         List<Integer> values = new ArrayList<>();
 
+        for (int[] neighbor : graph.get(current)) {
+            int next = neighbor[0];
+            int weight = neighbor[1];
+            if (next == parent) continue;
+
+            int temp = dfs(next, current, graph, machines, result);
+            if (temp > 0) {
+                values.add(Math.min(temp, weight));
+            }
+        }
+
+        return Integer.MAX_VALUE;
+    }
+
+    
+    public static int minTime(List<List<Integer>> roads, List<Integer> machines) {
+        int n = roads.size() + 1;
+        int[] result = new int[1];
+
+        Set<Integer> machinesSet = new HashSet<>(machines);
+        List<List<int[]>> graph = new ArrayList<>(n);
+
+        for (int i = 0; i < n; i++) {
+            graph.add(new ArrayList<>());
+        }
+
+        for (List<Integer> road : roads) {
+            int a = road.get(0);
+            int b = road.get(1);
+            int d = road.get(2);
+            graph.get(a).add(new int[]{b, d});
+            graph.get(b).add(new int[]{a, d});
+        }
+        
         return Integer.MAX_VALUE;
     }
     
