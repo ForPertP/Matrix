@@ -114,6 +114,7 @@ class Result
         }
 
         Dfs(0, -1, graph, machinesSet, ref result);
+        //dfs(0, -1, graph, machinesSet, result);
 
         return result;
     }
