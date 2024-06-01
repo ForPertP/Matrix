@@ -35,10 +35,26 @@ class Result {
             }
         }
 
-        return Integer.MAX_VALUE;
+        if (!machines.contains(current)) {
+            if (values.isEmpty()) return -1;
+            if (values.size() == 1) return values.get(0);
+
+            Collections.sort(values);
+
+            for (int i = 0; i < values.size() - 1; i++) {
+                result[0] += values.get(i);
+            }
+
+            return values.get(values.size() - 1);
+        } else {
+            for (int value : values) {
+                result[0] += value;
+            }
+
+            return Integer.MAX_VALUE;
+        }
     }
 
-    
     public static int minTime(List<List<Integer>> roads, List<Integer> machines) {
         int n = roads.size() + 1;
         int[] result = new int[1];
@@ -57,11 +73,12 @@ class Result {
             graph.get(a).add(new int[]{b, d});
             graph.get(b).add(new int[]{a, d});
         }
-        
-        return Integer.MAX_VALUE;
+
+        dfs(0, -1, graph, machinesSet, result);
+
+        return result[0];
     }
 }
-
 
 public class Solution {
     public static void main(String[] args) throws IOException {
@@ -108,4 +125,3 @@ public class Solution {
         bufferedWriter.close();
     }
 }
-
