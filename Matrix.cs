@@ -40,6 +40,7 @@ class Result
             if (next == parent) continue;
 
             int temp = Dfs(next, current, graph, machines, ref result);
+            //int temp = dfs(next, current, graph, machines, result);
             if (temp > 0)
             {
                 values.Add(Math.Min(temp, weight));
